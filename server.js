@@ -2,15 +2,16 @@
 // where your node app starts
 
 // init project
-const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+
 const express = require("express");
 const app = express();
-
+const fetch = require("node-fetch");
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
   
   app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
   app.use((req, resp, next) => {
     const now = new Date();
-    const time = `${now.tolocaleDateString()} - $no.toLocaleTimeString()}`;
+    const time = `${now.toLocaleDateString()} - $no.toLocaleTimeString()}`;
     const path = `"${req.method} ${req.path}"`;
     const m = `${req.ip} - ${time} - ${path}`;
   
