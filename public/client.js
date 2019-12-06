@@ -1,42 +1,47 @@
-// client-side js
-// run by the browser each time your view template is loaded
+/*var regions = ["Albania",
+"Argentina",
+"Armenia",
+"Australia",
+"Austria",
+"Belgium",
+"Brazil",
+"Bulgaria",
+"Canada",
+"Colombia",
+"Croatia",];*/
 
-console.log("hello world :o");
+const url_fd2 = "https://uinames.com/api/";
+const url_fd3 = "https://uinames.com/api/?gender=male"
+const url_fd4 = "https://uinames.com/api/?gender=female"
+const url_fd5 = "https://uinames.com/api/?region=germany&gender=female"
 
-// our default array of dreams
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
+function generate(){
+	document.getElementById("intro").style.display = "none";
+	document.getElementById("datacss").style.display = "block";
+	let url = "https://uinames.com/api/?";
+	var region = document.getElementById("regionlist").value;
+	var gender = document.getElementById("genders").value;
+	console.log("region is " + region + " gender is " +gender);
+	if (region != undefined && gender != undefined) {
+	    url = url + "region=" + region + "&gender=" + gender;
+	}
+	console.log("fetching " + url);
+	fetch(url)
+		.then((resp) => resp.json()) // Transform the data into json
+		.then(function(data) {
+	
+			 document.getElementById("first").innerHTML = " " + data.name;
+			document.getElementById("last").innerHTML = data.surname;
+			document.getElementById("gender").innerHTML = " " + data.gender;
+			document.getElementById("region").innerHTML = " " + data.region;
+			})  
+		.catch(function(error) {
+			document.getElementById("content").innerHTML += "Error with Food Central API: " + error;
+		}); // fetch url FILL IN MISSING CODE
+} // generate
 
-// define variables that reference elements on our page
-const dreamsList = document.getElementById("dreams");
-const dreamsForm = document.forms[0];
-const dreamInput = dreamsForm.elements["dream"];
 
-// a helper function that creates a list item for a given dream
-const appendNewDream = function(dream) {
-  const newListItem = document.createElement("li");
-  newListItem.innerHTML = dream;
-  dreamsList.appendChild(newListItem);
-};
 
-// iterate through every dream and add it to our page
-dreams.forEach(function(dream) {
-  appendNewDream(dream);
-});
-
-// listen for the form to be submitted and add a new dream when it is
-dreamsForm.onsubmit = function(event) {
-  // stop our form submission from refreshing the page
-  event.preventDefault();
-
-  // get dream value and add it to the list
-  dreams.push(dreamInput.value);
-  appendNewDream(dreamInput.value);
-
-  // reset form
-  dreamInput.value = "";
-  dreamInput.focus();
-};
+  
+  
+  
