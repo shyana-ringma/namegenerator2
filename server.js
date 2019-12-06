@@ -2,8 +2,22 @@
 // where your node app starts
 
 // init project
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 const express = require("express");
 const app = express();
+
+  
+  app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
+  app.use((req, resp, next) => {
+    const now = new Date();
+    const time = `${now.tolocaleDateString()} - $no.toLocaleTimeString()}`;
+    const path = `"${req.method} ${req.path}"`;
+    const m = `${req.ip} - ${time} - ${path}`;
+  
+  console.log(m)
+  next();
+  
+  });
 
 // we've started you off with Express,
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -20,3 +34,5 @@ app.get("/", function(request, response) {
 const listener = app.listen(process.env.PORT, function() {
   console.log("Your app is listening on port " + listener.address().port);
 });
+
+
